@@ -2,12 +2,10 @@
 
 I Selenium-prosjekter ønsker vi å plassere ofte brukt funksjonalitet på et sted, 
 for å minimisere duplisering og for enklere å finne frem til de ulike funksjonene.
-Denne delen av leksjonen vil innføre konspetet om en BaseKlasse, samt en klasse for utvidelser
-av Selenium-funksjonalitet, tilpasset våre behov.
+Denne delen av leksjonen vil en klasse for utvidelser av Selenium-funksjonalitet,
+tilpasset våre behov.
 
-1) Innfør en base-klasse som holder på WebDriver og tar seg av Setup og Teardown av WebDriver.
-
-2) Innfør SeleniumExtensions og lag egne utvidelsesmetoder for:
+1) Innfør SeleniumExtensions og lag egne utvidelsesmetoder for:
  - GåTilUrl
  - FinnElement/FinnElementer fra WebDriver
  - FinnElement/FinnElementer fra IWebElement

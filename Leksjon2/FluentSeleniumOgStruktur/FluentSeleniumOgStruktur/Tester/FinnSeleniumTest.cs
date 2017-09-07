@@ -1,13 +1,14 @@
-﻿using FluentSeleniumOgStruktur.Base;
-using FluentSeleniumOgStruktur.Extensions;
+﻿using FluentSeleniumOgStruktur.Extensions;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
 using System.Linq;
 
-namespace FluentSeleniumOgStruktur
+namespace FluentSeleniumOgStruktur.Tester
 {
     [TestFixture]
-    public class FinnSeleniumTest : TestBase
+    public class FinnSeleniumTest
     {
         [Test]
         public void HelloFinn()
@@ -54,6 +55,21 @@ namespace FluentSeleniumOgStruktur
             var results = resultContainer.FinnElementer(By.ClassName("result-item"));
 
             Assert.That(results.Any(), "Forventet å finne søkeresultater.");
+        }
+
+        protected IWebDriver _webDriver;
+
+        [SetUp]
+        public void Setup()
+        {
+            _webDriver = new ChromeDriver();
+            _webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _webDriver.Dispose();
         }
     }
 }
