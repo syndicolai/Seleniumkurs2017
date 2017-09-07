@@ -1,0 +1,13 @@
+﻿#Fluent og byggere
+
+PageObjects - Nok et struktur-konsept. Vi legger deler metoder opp etter hvilken sider
+de utføres på. F.eks. vil funksjoner tilknyttet søkresultat-siden være tilknyttet
+noe a la "SøkeresultatPage", mens funksjoner sentralt for startsiden kan høre til "StartsidePage".
+
+PageObjects skal bygger videre på byggere og vil brukes av byggere. Byggere blir fra nå av mer
+"orkestrører", og det er her asserts vil bruke. Byggere bruker PageObjects for navigering og
+input-håndtering, mens selve Assert.True etc vil fortsette å ligge i byggere
+
+1) Start med StartsidePage - Hva kan legges her?
+
+2) Utvid med andre eventuelle page-objects. 
