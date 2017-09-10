@@ -15,7 +15,7 @@ namespace FluentOgByggere.Extensions
                 return elements.First();
             }
 
-            throw new System.Exception($"Fant ikke element {by}");
+            return null;
         }
 
         public static List<IWebElement> FinnElementer(this IWebDriver driver, By by)

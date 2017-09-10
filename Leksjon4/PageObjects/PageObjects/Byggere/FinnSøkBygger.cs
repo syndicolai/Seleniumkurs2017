@@ -5,6 +5,8 @@ using OpenQA.Selenium;
 using System.Linq;
 using OpenQA.Selenium.Chrome;
 using FluentOgByggere.PageObjects;
+using PageObjects.Konstanter;
+using System.Text.RegularExpressions;
 
 namespace PageObjects.Byggere
 {
@@ -25,6 +27,11 @@ namespace PageObjects.Byggere
             _resultatKategoriPage = new ResultatKategoriPage(_webDriver);
         }
 
+        public void SøkefeltetEksistere()
+        {
+            var element = _startsidePage.HentSøkeelement();
+            Assert.IsNotNull(element, $"Forventet å finne element med id {ElementKonstanter.SøkefeltId}");
+        }
 
         public void NavigerTilStartside()
         {
@@ -39,6 +46,14 @@ namespace PageObjects.Byggere
         public void UtførerSøk(string søkestring)
         {
             _startsidePage.UtførSøk(søkestring);
+        }
+
+        public void LavestPrisVæreFørstIListen()
+        {
+            var førstePris = _søkeresultatPage.FinnPris(0);
+            var andrePris = _søkeresultatPage.FinnPris(1);
+            
+            Assert.LessOrEqual(førstePris, andrePris);
         }
 
         public void UrlInneholde(string forventetInnhold)
@@ -66,6 +81,16 @@ namespace PageObjects.Byggere
         public void SøktPå(string søketerm)
         {
             _resultatKategoriPage.NavigerTil($"https://www.finn.no/globalsearchlander.html?searchKeys=&q={søketerm}");
+        }
+        
+        public void SøkeresultaterFor(string søketerm)
+        {
+            _webDriver.Navigate().GoToUrl($"https://www.finn.no/mc/all/search.html?q={søketerm}");
+        }
+
+        public void SortererSøkeresultater()
+        {
+            _søkeresultatPage.SorterResultaterEtter("Pris lav-høy");
         }
 
         [TearDown]

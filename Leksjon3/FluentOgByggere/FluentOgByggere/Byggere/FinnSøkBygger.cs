@@ -6,6 +6,7 @@ using OpenQA.Selenium;
 using System.Linq;
 using OpenQA.Selenium.Chrome;
 using FluentOgByggere.Konstanter;
+using System.Text.RegularExpressions;
 
 namespace FluentOgByggere.Byggere
 {
@@ -16,9 +17,9 @@ namespace FluentOgByggere.Byggere
             _webDriver.Navigate().GoToUrl(url);
         }
 
-        public void TittelenPåSidenVære(string forventetTittel)
+        public void SøkefeltetEksistere()
         {
-            Assert.AreEqual(forventetTittel, _webDriver.Title);
+            Assert.IsNotNull(_webDriver.FinnElement(By.Id(ElementKonstanter.SøkefeltId)), $"Forventet å finne element med id {ElementKonstanter.SøkefeltId}");
         }
 
         public void UtførerSøk(string søkestring)
@@ -38,6 +39,35 @@ namespace FluentOgByggere.Byggere
             var søkeresultatKategorier = _webDriver.FinnElementer(By.ClassName("dropdown-link"));
             Assert.That(søkeresultatKategorier.Any(kategori => kategori.Text.Contains(forventetKategori)), $"Forventet å finne søkekategori '{forventetKategori}'");
         }
+
+
+        public void SøkeresultaterFor(string søketerm)
+        {
+            _webDriver.Navigate().GoToUrl($"https://www.finn.no/mc/all/search.html?q={søketerm}");
+           
+        }
+
+        public void SortererSøkeresultater()
+        {
+            var sorteringselement = _webDriver.FinnElement(By.Id("sort"));
+            sorteringselement.SkrivTekstIElement("Pris lav-høy");
+            sorteringselement.SkrivTekstIElement(Keys.Enter);
+        }
+
+        public void LavestPrisVæreFørstIListen()
+        {
+            var prisWrappers = _webDriver.FinnElementer(By.ClassName("result-item"));
+            Assert.IsNotNull(prisWrappers?.FirstOrDefault());
+            var førstePrisElement = prisWrappers[0].FinnElementer(By.ClassName("inlineblockify"));
+            Assert.IsNotNull(prisWrappers[1]);
+
+            var andrePriselement = prisWrappers[1].FinnElementer(By.ClassName("inlineblockify"));
+            var førstePris = Regex.Replace(førstePrisElement.Last().Text, @"[^\d]", string.Empty);
+            var andrePris = Regex.Replace(andrePriselement.Last().Text, @"[^\d]", string.Empty);
+
+            Assert.LessOrEqual(int.Parse(førstePris), int.Parse(andrePris));
+        }
+
 
         public void VisesResultater()
         {

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PageObjects.Konstanter;
 using PageObjects.Extensions;
+using System;
 
 namespace FluentOgByggere.PageObjects
 {
@@ -22,6 +23,11 @@ namespace FluentOgByggere.PageObjects
             var søkefelt = Driver.FinnElement(By.Id(ElementKonstanter.SøkefeltId));
             søkefelt.SkrivTekstIElement(søkestring);
             Driver.FinnElement(By.ClassName(ElementKonstanter.SøkeknappKlasse)).Klikk();
+        }
+
+        public IWebElement HentSøkeelement()
+        {
+           return Driver.FinnElement(By.Id(ElementKonstanter.SøkefeltId));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PageObjects.Byggere;
 using NUnit.Framework;
+using FluentOgByggere.Testdata;
 
 namespace PageObjects.Tester
 {
@@ -7,18 +8,19 @@ namespace PageObjects.Tester
     public class FinnSeleniumTest : FinnSøkBygger
     {
         [Test]
-        public void HelloFinn()
+        public void Finn_Startside_SøkefeltEksisterer()
         {
             Gitt.At.Vi.NavigerTilStartside();
-            Så.Skal.TittelenPåSidenVære("FINN.no – Mulighetenes marked");
+            Så.Skal.SøkefeltetEksistere();
         }
 
         [Test]
         public void Finn_SøkPåMotorsykkel_EndrerSøkIUrl()
         {
+            var søketerm = MotorsykkelData.Get();
             Gitt.At.Vi.NavigerTilStartside();
-            Når.Vi.UtførerSøk("BMW");
-            Så.Skal.UrlInneholde("BMW");
+            Når.Vi.UtførerSøk(søketerm);
+            Så.Skal.UrlInneholde(søketerm);
         }
 
         [Test]
@@ -26,16 +28,24 @@ namespace PageObjects.Tester
         {
             Gitt.At.Vi.NavigerTilStartside();
 
-            Når.Vi.UtførerSøk("BMW K1200");
+            Når.Vi.UtførerSøk(MotorsykkelData.Get());
             Så.Skal.SøkeresultatKategorierInneholdeKategori("MC");
         }
 
         [Test]
         public void Finn_SøkPåMotorsykkel_VisResultater()
         {
-            Gitt.At.Vi.Har.SøktPå("BMW K1200");
+            Gitt.At.Vi.Har.SøktPå(MotorsykkelData.Get());
             Når.Vi.VelgerKategori("MC");
             Så.Skal.Det.VisesResultater();
+        }
+
+        [Test]
+        public void Finn_Resultatliste_SorterPåPris_LaverstFørst()
+        {
+            Gitt.At.Vi.Har.SøkeresultaterFor(MotorsykkelData.Get());
+            Når.Vi.SortererSøkeresultater();
+            Så.Skal.LavestPrisVæreFørstIListen();
         }
     }
 }

@@ -18,10 +18,12 @@ namespace Leksjon1
         }
 
         [Test]
-        public void HelloFinn()
+        public void Finn_Startside_SøkefeltEksisterer()
         {
             _webDriver.Navigate().GoToUrl("https://www.finn.no/");
-            Assert.AreEqual("FINN.no – Mulighetenes marked", _webDriver.Title);
+            var resultater = _webDriver.FindElements(By.Id("search"));
+            
+            Assert.IsTrue(resultater.Any());
         }
 
         [Test]

@@ -58,6 +58,7 @@
     <Compile Include="Extensions\SeleniumExtensions.cs" />
     <Compile Include="Konstanter\ElementKonstanter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testdata\MotorsykkelData.cs" />
     <Compile Include="Tester\FinnSeleniumTest.cs" />
   </ItemGroup>
   <ItemGroup>

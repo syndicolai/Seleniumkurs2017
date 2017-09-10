@@ -10,6 +10,9 @@
 4) Lag en ny test med samme søketerm som i 2) og 3), men her skal testen starte på kategorisiden. Dvs, testen må sette sin egen tilstand til å være
 på kategorisiden, og vil derfor starte hvor 2) og 3) sluttet. Velg kategori MC og verifiser at søkeresultater vises.
 
-5) Mange åpne vinduer? Sørg for at testene rydder opp etter seg.
+5) Lag en ny test som starter på søkeresultat-siden. Sorter resultat ette pris laverst først. Verifiser at
+resultat 1 er billigere enn resultat 2.
+
+6) Mange åpne vinduer? Sørg for at testene rydder opp etter seg.
 
 NB. Har du husket gode Assert-meldinger?
