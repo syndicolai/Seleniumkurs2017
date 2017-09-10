@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Leksjon1
 {
@@ -65,6 +66,26 @@ namespace Leksjon1
             var results = resultContainer.FindElements(By.ClassName("result-item"));
 
             Assert.That(results.Any(), "Forventet å finne søkeresultater.");
+        }
+
+        [Test]
+        public void Finn_Resultatliste_SorterPåPris_LaverstFørst()
+        {
+            _webDriver.Navigate().GoToUrl("https://www.finn.no/mc/all/search.html?q=bmw%20k1200");
+            var sorteringselement = _webDriver.FindElement(By.Id("sort"));
+            sorteringselement.SendKeys("Pris lav-høy");
+            sorteringselement.SendKeys(Keys.Enter);
+
+            // Hent ut resultat-lister, deretter finn elementer som inneholder pris, formater tekststrengen og konverter til
+            // heltall, sjekk at prisen i den første raden er mindre enn den andre (billigst først).
+            var prisWrappers = _webDriver.FindElements(By.ClassName("result-item"));
+            Assert.IsNotNull(prisWrappers?.FirstOrDefault());
+            var førstePrisElement = prisWrappers[0].FindElements(By.ClassName("inlineblockify"));
+            Assert.IsNotNull(prisWrappers[1]);
+            var andrePriselement = prisWrappers[1].FindElements(By.ClassName("inlineblockify"));
+            var førstePris = Regex.Replace(førstePrisElement.Last().Text, @"[^\d]", string.Empty);
+            var andrePris = Regex.Replace(andrePriselement.Last().Text, @"[^\d]", string.Empty);
+            Assert.LessOrEqual(int.Parse(førstePris), int.Parse(andrePris));
         }
 
         [TearDown]
