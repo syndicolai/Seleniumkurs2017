@@ -1,0 +1,18 @@
+﻿## Selenium Leksjon 1
+
+1) Lag en test som navigerer til Finn.no og sjekker at tittelen er "FINN.no – Mulighetenes marked"
+
+2) Lag en ny test som navigerer til Finn.no forsiden og utfører et søk på "BMW K1200". Verifiser at url er endret og inneholder søketerm. (Det er nok å verifisere at f.eks BMW er i url)
+ - Husk; her vil URL formateres da det ikke er mulig med mellomrom i url'er.
+3) Lag en ny test som i 2). Verifiser at søkeresultat-kategori inneholder kategori for "MC".
+ - Her gjelder det å undersøke HTML-koden og finne selectors som kan brukes for å finne resultatkategorier.
+
+4) Lag en ny test med samme søketerm som i 2) og 3), men her skal testen starte på kategorisiden. Dvs, testen må sette sin egen tilstand til å være
+på kategorisiden, og vil derfor starte hvor 2) og 3) sluttet. Velg kategori MC og verifiser at søkeresultater vises.
+
+5) Lag en ny test som starter på søkeresultat-siden. Sorter resultat ette pris laverst først. Verifiser at
+resultat 1 er billigere enn resultat 2.
+
+6) Mange åpne vinduer? Sørg for at testene rydder opp etter seg.
+
+NB. Har du husket gode Assert-meldinger?

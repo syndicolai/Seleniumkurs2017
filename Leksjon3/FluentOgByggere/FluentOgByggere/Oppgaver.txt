@@ -1,0 +1,38 @@
+﻿#Fluent og byggere
+
+Fluent - vi vil at testene skal være lette å lese. Innfører en "ordbok", hvis eneste hensikt er
+å være syntaktisk sukker.
+Byggere - Plasserer ulike oppgaver i egne metoder i egne klasser med fornuftige og tydelige navn.
+F.eks egen bygger for søk, egen bygger for innlogging, egen bygger for å gå gjennom boligannonser, etc.
+
+1) Innfør en Bygger - en ny klasse som heter "FinnSøkBygger" som arver fra FluentBase:
+
+public class FinnSøkBygger : FluentBase<FinnSøkBygger>
+
+2) Flytt setup og teardown-metodene, og selve web-driveren inn i denne klassen. Test-klassen
+blir nå mer ryddig og mindre.
+
+3) Flytt funksjonalitet som å NavigereTilUrl, UtføreSøk, o.l. til byggeren. Gi forståelige navn
+og grupper kodelinjer som "hører sammen" i egne metoder. Et eksempel:
+
+  public void UtførerSøk(string søkestring)
+{
+
+   // linjene som trengs for å utføre et søk...
+
+
+    var søkefelt = _webDriver.FinnElement(By.Id("search"));
+    søkefelt.SkrivTekstIElement(søkestring);
+    _webDriver.FinnElement(By.ClassName("primary")).Klikk();
+}
+
+4) Slå sammen byggemetodene med Fluent-syntaks. Ha i bakhodet syntaks som samsvarer med:
+Gitt.At...
+Når...
+Så.Skal...
+
+Given, When, Then..
+
+Nå ble vel testene fine og lesbare?
+
+5) MAGIC STRINGS! La oss gjøre noe med dette. Innføre ElementKonstanter-klasse og lagre de her.
